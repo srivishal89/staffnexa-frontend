@@ -1,84 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Staffnexa – Job Application</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<script>
-tailwind.config = {
-    theme: {
-        extend: {
-            fontFamily: { sans: ['Inter', 'sans-serif'] },
-            colors: {
-                brand: {
-                    50: '#eff6ff',
-                    100: '#dbeafe',
-                    500: '#3b82f6',
-                    600: '#2563eb',
-                    700: '#1d4ed8',
-                    900: '#1e3a8a',
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staffnexa – Job Application</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
                 }
             }
         }
-    }
-}
-</script>
+    </script>
 
-<style>
-.custom-scrollbar::-webkit-scrollbar { width: 6px; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-.fade-in { animation: fadeIn 0.3s ease-in-out; }
-@keyframes fadeIn { from {opacity:0} to {opacity:1} }
-</style>
-
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
 
-<body class="bg-gradient-to-br from-brand-900 via-brand-700 to-blue-500 min-h-screen flex items-center justify-center p-4">
+<body class="bg-gradient-to-br from-brand-900 via-brand-700 to-blue-500 min-h-screen flex items-center justify-center p-4 text-slate-800">
 
 <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden fade-in">
-
+        
 <!-- HEADER -->
 <div class="border-b p-6 flex justify-between items-center">
-<h1 class="text-xl font-bold">Staffnexa – Job Application</h1>
+    <h1 class="text-2xl font-bold">Staffnexa – Job Application</h1>
 </div>
 
 <!-- FORM -->
-<form id="applicationForm" class="p-6 grid md:grid-cols-2 gap-4">
+<form id="applicationForm" class="p-6 grid md:grid-cols-2 gap-6">
 
-<input name="name" required placeholder="First Name" class="border p-2 rounded">
-<input name="lastname" required placeholder="Last Name" class="border p-2 rounded">
+<input type="text" id="firstName" required placeholder="First Name" class="border p-2 rounded">
+<input type="text" id="lastName" required placeholder="Last Name" class="border p-2 rounded">
 
-<input name="phone" required placeholder="Phone" class="border p-2 rounded">
-<input name="role" required placeholder="Applying For" class="border p-2 rounded">
+<input type="tel" id="phone" required placeholder="Phone" class="border p-2 rounded">
+<input type="text" id="position" required placeholder="Applying For" class="border p-2 rounded">
 
-<input name="location" placeholder="Location" class="border p-2 rounded">
+<input type="text" id="location" placeholder="Location" class="border p-2 rounded">
 
 <!-- FILE -->
 <div class="md:col-span-2">
-<input type="file" name="resume" id="resume" required class="border p-2 w-full rounded">
+    <input type="file" id="resume" required class="border p-2 w-full rounded">
 </div>
 
 <!-- TERMS -->
-<div class="md:col-span-2 flex gap-2 items-center">
-<input type="checkbox" required>
-<span>I accept terms</span>
+<div class="md:col-span-2 flex items-center gap-2">
+    <input type="checkbox" id="termsCheck" required>
+    <span>I accept Terms & Conditions</span>
 </div>
 
 <!-- BUTTONS -->
 <div class="md:col-span-2 flex gap-4">
-<button id="submitBtn" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-Submit
-</button>
+    <button id="btn-submit" type="submit" class="bg-blue-600 text-white px-6 py-2 rounded">
+        Submit
+    </button>
 
-<button type="button" onclick="resetForm()" class="border px-4 py-2 rounded">
-Reset
-</button>
+    <button type="button" onclick="resetForm()" class="border px-6 py-2 rounded">
+        Reset
+    </button>
 </div>
 
 </form>
@@ -87,27 +84,44 @@ Reset
 
 <!-- SUCCESS MODAL -->
 <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-<div class="bg-white p-6 rounded text-center">
-<h3 class="text-lg font-bold mb-3">Application Submitted</h3>
-<button onclick="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded">Close</button>
-</div>
+    <div class="bg-white p-6 rounded text-center">
+        <h3 class="text-lg font-bold mb-3">Application Submitted</h3>
+        <button onclick="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
+            Close
+        </button>
+    </div>
 </div>
 
 <script>
 
 const API = "https://staffnexa-backend.onrender.com/candidates";
 
-// 🔥 SUBMIT (FIXED)
+// 🔥 SUBMIT FUNCTION (WORKING)
 document.getElementById("applicationForm").addEventListener("submit", async function(e) {
 
     e.preventDefault();
 
-    const form = e.target;
-    const btn = document.getElementById("submitBtn");
+    const btn = document.getElementById("btn-submit");
 
-    // 🔥 USE FORMDATA (IMPORTANT)
-    const formData = new FormData(form);
+    // CREATE FORM DATA
+    const formData = new FormData();
 
+    // MAP FIELDS
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+
+    formData.append("name", firstName + " " + lastName);
+    formData.append("phone", document.getElementById("phone").value);
+    formData.append("role", document.getElementById("position").value);
+    formData.append("location", document.getElementById("location").value);
+
+    // FILE
+    const fileInput = document.getElementById("resume");
+    if (fileInput.files.length > 0) {
+        formData.append("resume", fileInput.files[0]);
+    }
+
+    // LOADING
     btn.innerText = "Submitting...";
     btn.disabled = true;
 
@@ -127,7 +141,7 @@ document.getElementById("applicationForm").addEventListener("submit", async func
         // SUCCESS
         document.getElementById("successModal").classList.remove("hidden");
 
-        form.reset();
+        document.getElementById("applicationForm").reset();
 
     } catch (err) {
         console.error(err);
