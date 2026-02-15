@@ -3,307 +3,400 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Staffnexa – Job Application</title>
+  <title>Staffnexa – Enterprise Application</title>
 
   <style>
     :root {
-      --primary: #5b6cff;
-      --primary-hover: #4a5be0;
-      --bg: #f4f6f8;
-      --white: #ffffff;
-      --text: #333333;
-      --border: #ddd;
-      --error: #d9534f;
-      --success: #28a745;
+      /* Enterprise Palette */
+      --primary: #2563eb;       /* Royal Blue */
+      --primary-dark: #1e40af;  /* Darker Blue */
+      --bg-body: #f1f5f9;       /* Light Slate Bg */
+      --bg-card: #ffffff;
+      --text-main: #0f172a;     /* Dark Slate */
+      --text-secondary: #64748b;/* Muted Slate */
+      --border: #e2e8f0;
+      --input-bg: #f8fafc;
+      --success-bg: #dcfce7;
+      --success-text: #166534;
+      --error-bg: #fee2e2;
+      --error-text: #991b1b;
+      --radius: 8px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
       margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .main-wrapper {
+      width: 100%;
       padding: 20px;
-      color: var(--text);
     }
 
     .container {
-      max-width: 600px;
-      margin: 40px auto;
-      background: var(--white);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border-top: 5px solid var(--primary); /* Corporate Accent */
+      overflow: hidden;
     }
 
-    /* Header & Language Toggle */
+    /* Header Styling */
     .header {
+      padding: 24px 32px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 25px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 15px;
+      background: #fff;
     }
 
     .header h2 {
       margin: 0;
-      font-size: 22px;
-      color: var(--primary);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    /* Modern Segmented Control for Language */
+    .lang-toggle {
+      background: var(--bg-body);
+      padding: 4px;
+      border-radius: 6px;
+      display: flex;
+      border: 1px solid var(--border);
     }
 
     .lang-toggle button {
-      margin-left: 5px;
-      padding: 6px 12px;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      background: #f9f9f9;
-      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: 6px 14px;
       font-size: 13px;
-      transition: all 0.2s;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .lang-toggle button.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
+      background: var(--bg-card);
+      color: var(--primary);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
 
-    /* Form Grid */
-    .row {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 15px;
+    /* Form Layout */
+    form {
+      padding: 32px;
     }
 
-    .field {
-      flex: 1;
+    .grid-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
       display: flex;
       flex-direction: column;
     }
 
     label {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: #555;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
     }
 
     input, select, textarea {
-      padding: 12px;
-      border-radius: 8px;
+      background: var(--input-bg);
       border: 1px solid var(--border);
-      font-size: 14px;
-      transition: border 0.2s;
-      background: #fff;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 15px;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+      width: 100%;
     }
 
     input:focus, select:focus, textarea:focus {
       outline: none;
+      background: #fff;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(91, 108, 255, 0.1);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
-    /* File Input Styling */
+    /* File Input Specifics */
     input[type="file"] {
-      padding: 8px;
-      background: #fafafa;
+      padding: 10px;
+      background: #fff;
+      border: 1px dashed var(--border);
     }
-
+    
     textarea {
       resize: vertical;
-      min-height: 80px;
+      min-height: 90px;
       font-family: inherit;
-      color: #666;
-      font-size: 13px;
     }
 
     .note {
-      font-size: 11px;
-      color: #888;
-      margin-top: 4px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 6px;
       text-align: right;
+      font-style: italic;
     }
 
-    /* Terms Checkbox */
-    .checkbox-row {
+    /* Terms Section */
+    .terms-box {
+      margin-top: 10px;
+      padding: 16px;
+      background: var(--bg-body);
+      border-radius: 6px;
+      border: 1px solid var(--border);
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin: 20px 0;
-      padding: 10px;
-      background: #f9f9f9;
-      border-radius: 6px;
+      gap: 12px;
     }
 
-    .checkbox-row input {
-      width: auto;
+    .terms-box input {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
       margin: 0;
-      cursor: pointer;
     }
 
-    .checkbox-row label {
+    .terms-box label {
       margin: 0;
-      font-weight: normal;
+      font-size: 14px;
+      text-transform: none;
+      color: var(--text-main);
       cursor: pointer;
-    }
-
-    /* Buttons */
-    .buttons {
-      display: flex;
-      gap: 15px;
-      margin-top: 10px;
-    }
-
-    button.submit {
-      flex: 2;
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 14px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    button.submit:hover {
-      background: var(--primary-hover);
-    }
-
-    button.submit:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-
-    button.reset {
-      flex: 1;
-      background: white;
-      border: 1px solid var(--border);
-      color: #666;
-      padding: 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    button.reset:hover {
-      background: #f0f0f0;
-    }
-
-    /* Message Box */
-    #msg {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
       font-weight: 500;
+    }
+
+    /* Action Buttons */
+    .actions {
+      margin-top: 32px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    button.submit-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      flex: 2;
+      transition: background 0.2s;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+    }
+
+    button.submit-btn:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.4);
+    }
+
+    button.submit-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      box-shadow: none;
+    }
+
+    button.reset-btn {
+      background: white;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 14px 24px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 6px;
+      flex: 1;
+      transition: all 0.2s;
+    }
+
+    button.reset-btn:hover {
+      background: var(--bg-body);
+      color: var(--text-main);
+      border-color: #cbd5e1;
+    }
+
+    /* Message Area */
+    #msg {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
       display: none;
     }
-    .success { background: #e8f5e9; color: var(--success); display: block !important; }
-    .error { background: #fdecea; color: var(--error); display: block !important; }
+    
+    .success { 
+      background: var(--success-bg); 
+      color: var(--success-text); 
+      border: 1px solid #bbf7d0; 
+      display: block !important; 
+    }
+    
+    .error { 
+      background: var(--error-bg); 
+      color: var(--error-text); 
+      border: 1px solid #fecaca; 
+      display: block !important; 
+    }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      .row { flex-direction: column; gap: 0; }
-      .field { margin-bottom: 15px; }
-      .container { padding: 20px; margin: 20px auto; }
-      .buttons { flex-direction: column; }
+    /* Mobile Responsiveness */
+    @media (max-width: 640px) {
+      body {
+        background: #fff;
+        display: block;
+        padding: 0;
+      }
+      .main-wrapper {
+        padding: 0;
+      }
+      .container {
+        border-radius: 0;
+        box-shadow: none;
+        border-top: none;
+        border-bottom: 2px solid var(--border);
+      }
+      .grid-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .actions {
+        flex-direction: column-reverse;
+      }
+      button.reset-btn, button.submit-btn {
+        width: 100%;
+        flex: auto;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
-    <div class="header">
-      <h2 id="title">Staffnexa Application</h2>
-      <div class="lang-toggle">
-        <button id="btn-en" class="active" onclick="setLang('en')">English</button>
-        <button id="btn-hi" onclick="setLang('hi')">हिंदी</button>
-      </div>
-    </div>
-
-    <form id="jobForm">
+  <div class="main-wrapper">
+    <div class="container">
       
-      <!-- Name Section -->
-      <div class="row">
-        <div class="field">
-          <label id="fnLbl" for="firstName">First Name *</label>
-          <input type="text" id="firstName" name="firstName" required placeholder="Ex: Vishal" />
-        </div>
-        <div class="field">
-          <label id="lnLbl" for="lastName">Last Name *</label>
-          <input type="text" id="lastName" name="lastName" required placeholder="Ex: Srivastava" />
+      <!-- Header -->
+      <div class="header">
+        <h2 id="title">Staffnexa Application</h2>
+        <div class="lang-toggle">
+          <button id="btn-en" class="active" onclick="setLang('en')">English</button>
+          <button id="btn-hi" onclick="setLang('hi')">हिंदी</button>
         </div>
       </div>
 
-      <!-- Contact & Role Section -->
-      <div class="row">
-        <div class="field">
-          <label id="phLbl" for="phone">Phone Number *</label>
-          <input 
-            type="tel" 
-            id="phone" 
-            name="phone" 
-            required 
-            pattern="[0-9]{10}" 
-            maxlength="10" 
-            placeholder="9876543210"
-            oninput="this.value=this.value.replace(/[^0-9]/g,'')" 
-          />
+      <form id="jobForm">
+        
+        <!-- Row 1: Name -->
+        <div class="grid-row">
+          <div class="form-group">
+            <label id="fnLbl" for="firstName">First Name *</label>
+            <input type="text" id="firstName" name="firstName" required placeholder="Ex: Vishal" />
+          </div>
+          <div class="form-group">
+            <label id="lnLbl" for="lastName">Last Name *</label>
+            <input type="text" id="lastName" name="lastName" required placeholder="Ex: Srivastava" />
+          </div>
         </div>
-        <div class="field">
-          <label id="roleLbl" for="role">Applying For *</label>
-          <select id="role" name="role" required>
-            <option value="">Select Role...</option>
-            <option value="Housekeeping">Housekeeping</option>
-            <option value="Pantry">Pantry</option>
-            <option value="Security Guard">Security Guard</option>
-            <option value="Helper">Helper</option>
-            <option value="Supervisor">Supervisor</option>
-          </select>
+
+        <!-- Row 2: Contact & Role -->
+        <div class="grid-row">
+          <div class="form-group">
+            <label id="phLbl" for="phone">Phone Number *</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone" 
+              required 
+              pattern="[0-9]{10}" 
+              maxlength="10" 
+              placeholder="9876543210"
+              oninput="this.value=this.value.replace(/[^0-9]/g,'')" 
+            />
+          </div>
+          <div class="form-group">
+            <label id="roleLbl" for="role">Applying For *</label>
+            <select id="role" name="role" required>
+              <option value="">Select Role...</option>
+              <option value="Housekeeping">Housekeeping</option>
+              <option value="Pantry">Pantry</option>
+              <option value="Security Guard">Security Guard</option>
+              <option value="Helper">Helper</option>
+              <option value="Supervisor">Supervisor</option>
+            </select>
+          </div>
         </div>
-      </div>
 
-      <!-- Location & Resume -->
-      <div class="row">
-        <div class="field">
-          <label id="locLbl" for="location">Location</label>
-          <select id="location" name="location">
-            <option value="">Select Location...</option>
-            <option value="Noida">Noida</option>
-            <option value="Delhi">Delhi</option>
-            <option value="Gurugram">Gurugram</option>
-            <option value="Ghaziabad">Ghaziabad</option>
-          </select>
+        <!-- Row 3: Location & Resume -->
+        <div class="grid-row">
+          <div class="form-group">
+            <label id="locLbl" for="location">Location</label>
+            <select id="location" name="location">
+              <option value="">Select Location...</option>
+              <option value="Noida">Noida</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Gurugram">Gurugram</option>
+              <option value="Ghaziabad">Ghaziabad</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label id="resLbl" for="resume">Upload Resume *</label>
+            <input type="file" id="resume" name="resume" required accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+            <span class="note">PDF, DOC, JPG (Max 5MB)</span>
+          </div>
         </div>
-        <div class="field">
-          <label id="resLbl" for="resume">Upload Resume *</label>
-          <input type="file" id="resume" name="resume" required accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
-          <span class="note">PDF, DOC, JPG (Max 5MB)</span>
+
+        <!-- Terms Section -->
+        <div class="form-group">
+          <label id="tcLbl">Terms & Conditions</label>
+          <textarea id="tcText" readonly>Accuracy of information is mandatory. By submitting this form, you consent to Staffnexa Talent Solutions collecting and processing your personal data for recruitment purposes only.</textarea>
         </div>
-      </div>
 
-      <!-- Terms -->
-      <div class="field">
-        <label id="tcLbl">Terms & Conditions</label>
-        <textarea id="tcText" readonly>Accuracy of information is mandatory. By submitting this form, you consent to Staffnexa Talent Solutions collecting and processing your personal data for recruitment purposes only.</textarea>
-      </div>
+        <div class="terms-box">
+          <input type="checkbox" id="terms" required />
+          <label for="terms" id="agreeLbl">I accept the Terms & Conditions</label>
+        </div>
 
-      <div class="checkbox-row">
-        <input type="checkbox" id="terms" required />
-        <label for="terms" id="agreeLbl">I accept the Terms & Conditions</label>
-      </div>
+        <!-- Actions -->
+        <div class="actions">
+          <button type="button" class="reset-btn" onclick="resetForm()">Reset</button>
+          <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
+        </div>
 
-      <!-- Actions -->
-      <div class="buttons">
-        <button type="button" class="reset" onclick="resetForm()">Reset</button>
-        <button type="submit" class="submit" id="submitBtn">Submit Application</button>
-      </div>
+        <div id="msg"></div>
 
-      <div id="msg"></div>
-
-    </form>
+      </form>
+    </div>
   </div>
 
   <script>
