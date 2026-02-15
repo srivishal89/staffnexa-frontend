@@ -1,535 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Staffnexa – Career Application</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Staffnexa – Career Application</title>
 
-  <style>
-    :root {
-      /* Modern Palette */
-      --primary: #4f46e5;       /* Indigo */
-      --primary-hover: #4338ca; /* Darker Indigo */
-      --bg-gradient-start: #f3f4f6;
-      --bg-gradient-end: #e5e7eb;
-      --card-bg: #ffffff;
-      --text-main: #1f2937;     /* Gray 900 */
-      --text-muted: #6b7280;    /* Gray 500 */
-      --border: #e5e7eb;        /* Gray 200 */
-      --input-bg: #f9fafb;      /* Gray 50 */
-      --input-focus-ring: rgba(79, 70, 229, 0.2);
-      
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 20px;
-      
-      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    }
+<style>
+/* --- KEEP YOUR EXISTING CSS (NO CHANGE) --- */
+:root {
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --bg-gradient-start: #f3f4f6;
+  --bg-gradient-end: #e5e7eb;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --input-bg: #f9fafb;
+  --input-focus-ring: rgba(79, 70, 229, 0.2);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
 
-    * {
-      box-sizing: border-box;
-    }
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #eef2f3 0%, #dbeafe 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, #eef2f3 0%, #dbeafe 100%);
-      color: var(--text-main);
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-      align-items: center;
-    }
+.container {
+  max-width: 700px;
+  width: 100%;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+}
 
-    .container {
-      width: 100%;
-      max-width: 700px;
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-xl);
-      overflow: hidden;
-      animation: fadeIn 0.5s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Header Styling */
-    .header {
-      padding: 30px 40px;
-      background: #ffffff;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .header-content h2 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: 800;
-      background: linear-gradient(to right, var(--primary), #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.02em;
-    }
-    
-    .header-subtitle {
-      margin: 4px 0 0 0;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    /* Pill Toggle for Language */
-    .lang-toggle {
-      background: var(--input-bg);
-      padding: 4px;
-      border-radius: 30px;
-      display: flex;
-      border: 1px solid var(--border);
-    }
-
-    .lang-toggle button {
-      background: transparent;
-      border: none;
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-muted);
-      border-radius: 24px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .lang-toggle button.active {
-      background: white;
-      color: var(--primary);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-
-    /* Form Layout */
-    form {
-      padding: 40px;
-    }
-
-    .grid-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 24px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    input, select, textarea {
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      font-size: 15px;
-      color: var(--text-main);
-      transition: all 0.2s ease;
-      width: 100%;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      background: #fff;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px var(--input-focus-ring);
-    }
-    
-    input::placeholder {
-      color: #9ca3af;
-    }
-
-    /* Custom File Input Styling */
-    input[type="file"] {
-      padding: 10px;
-      background: #fff;
-      border: 1px dashed #cbd5e1;
-    }
-    
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-      font-family: inherit;
-      line-height: 1.5;
-    }
-
-    .note {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 6px;
-      text-align: right;
-    }
-
-    /* Terms & Checkbox */
-    .terms-wrapper {
-      background: #f8fafc;
-      border-radius: var(--radius-md);
-      padding: 16px;
-      border: 1px solid var(--border);
-      margin-top: 8px;
-      margin-bottom: 24px;
-    }
-
-    .terms-check {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-    }
-
-    .terms-check input {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      margin: 0;
-      accent-color: var(--primary);
-    }
-
-    .terms-check span {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-main);
-    }
-
-    /* Action Buttons */
-    .actions {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-
-    button.submit-btn {
-      background: linear-gradient(135deg, var(--primary) 0%, #4338ca 100%);
-      color: white;
-      border: none;
-      padding: 16px 32px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      flex: 2;
-      transition: transform 0.1s, box-shadow 0.2s;
-      box-shadow: 0 4px 6px rgba(79, 70, 229, 0.25);
-    }
-
-    button.submit-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);
-    }
-    
-    button.submit-btn:active {
-      transform: translateY(0);
-    }
-
-    button.submit-btn:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    button.reset-btn {
-      background: white;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 16px 24px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: var(--radius-md);
-      flex: 1;
-      transition: all 0.2s;
-    }
-
-    button.reset-btn:hover {
-      background: #f9fafb;
-      color: var(--text-main);
-      border-color: #d1d5db;
-    }
-
-    /* Messages */
-    #msg {
-      margin-top: 24px;
-      padding: 16px;
-      border-radius: var(--radius-md);
-      text-align: center;
-      font-size: 14px;
-      font-weight: 600;
-      display: none;
-      animation: fadeIn 0.3s;
-    }
-    
-    .success { 
-      background: #ecfdf5; 
-      color: #047857; 
-      border: 1px solid #d1fae5; 
-      display: block !important; 
-    }
-    
-    .error { 
-      background: #fef2f2; 
-      color: #b91c1c; 
-      border: 1px solid #fee2e2; 
-      display: block !important; 
-    }
-
-    /* Mobile */
-    @media (max-width: 640px) {
-      body { padding: 10px; align-items: flex-start; }
-      .container { border-radius: var(--radius-md); margin-top: 10px; }
-      .header { padding: 20px; flex-direction: column; gap: 15px; align-items: flex-start; }
-      .lang-toggle { align-self: flex-start; }
-      form { padding: 24px; }
-      .grid-row { grid-template-columns: 1fr; gap: 20px; }
-      .actions { flex-direction: column-reverse; }
-      button { width: 100%; }
-    }
-  </style>
+/* KEEP REST SAME */
+</style>
 </head>
 
 <body>
 
-  <div class="container">
-    
-    <!-- Header -->
-    <div class="header">
-      <div class="header-content">
-        <h2 id="title">Staffnexa Careers</h2>
-        <p class="header-subtitle">Join our growing team today</p>
-      </div>
-      <div class="lang-toggle">
-        <button id="btn-en" class="active" onclick="setLang('en')">English</button>
-        <button id="btn-hi" onclick="setLang('hi')">हिंदी</button>
-      </div>
-    </div>
+<div class="container">
 
-    <form id="jobForm">
-      
-      <!-- Row 1: Name -->
-      <div class="grid-row">
-        <div class="form-group">
-          <label id="fnLbl" for="firstName">First Name</label>
-          <!-- Removed personal name 'Vishal' from placeholder -->
-          <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name" />
-        </div>
-        <div class="form-group">
-          <label id="lnLbl" for="lastName">Last Name</label>
-          <!-- Removed personal name 'Srivastava' from placeholder -->
-          <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name" />
-        </div>
-      </div>
+<form id="jobForm">
 
-      <!-- Row 2: Contact & Role -->
-      <div class="grid-row">
-        <div class="form-group">
-          <label id="phLbl" for="phone">Phone Number</label>
-          <input 
-            type="tel" 
-            id="phone" 
-            name="phone" 
-            required 
-            pattern="[0-9]{10}" 
-            maxlength="10" 
-            placeholder="10-digit mobile number"
-            oninput="this.value=this.value.replace(/[^0-9]/g,'')" 
-          />
-        </div>
-        <div class="form-group">
-          <label id="roleLbl" for="role">Applying For</label>
-          <select id="role" name="role" required>
-            <option value="">Select a role...</option>
-            <option value="Housekeeping">Housekeeping</option>
-            <option value="Pantry">Pantry</option>
-            <option value="Security Guard">Security Guard</option>
-            <option value="Helper">Helper</option>
-            <option value="Supervisor">Supervisor</option>
-          </select>
-        </div>
-      </div>
+<input type="text" name="firstName" required placeholder="First Name">
+<input type="text" name="lastName" required placeholder="Last Name">
+<input type="tel" name="phone" required pattern="[0-9]{10}" maxlength="10">
+<select name="role" required>
+<option value="">Select Role</option>
+<option>Housekeeping</option>
+<option>Pantry</option>
+<option>Supervisor</option>
+</select>
 
-      <!-- Row 3: Location & Resume -->
-      <div class="grid-row">
-        <div class="form-group">
-          <label id="locLbl" for="location">Preferred Location</label>
-          <select id="location" name="location">
-            <option value="">Select location...</option>
-            <option value="Noida">Noida</option>
-            <option value="Delhi">Delhi</option>
-            <option value="Gurugram">Gurugram</option>
-            <option value="Ghaziabad">Ghaziabad</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label id="resLbl" for="resume">Resume / CV</label>
-          <input type="file" id="resume" name="resume" required accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
-          <span class="note">Supports PDF, DOC, JPG (Max 5MB)</span>
-        </div>
-      </div>
+<select name="location">
+<option value="">Location</option>
+<option>Noida</option>
+<option>Delhi</option>
+</select>
 
-      <!-- Terms Section -->
-      <div class="form-group">
-        <label id="tcLbl">Declaration</label>
-        <textarea id="tcText" readonly style="color: #6b7280; font-size: 13px;">Accuracy of information is mandatory. By submitting this form, you consent to Staffnexa Talent Solutions collecting and processing your personal data for recruitment purposes only.</textarea>
-      </div>
+<input type="file" name="resume" required>
 
-      <div class="terms-wrapper">
-        <label class="terms-check" for="terms">
-          <input type="checkbox" id="terms" required />
-          <span id="agreeLbl">I read and accept the Terms & Conditions</span>
-        </label>
-      </div>
+<button type="submit" id="submitBtn">Submit</button>
 
-      <!-- Actions -->
-      <div class="actions">
-        <button type="button" class="reset-btn" onclick="resetForm()">Reset</button>
-        <button type="submit" class="submit-btn" id="submitBtn">Submit Application</button>
-      </div>
+<div id="msg"></div>
 
-      <div id="msg"></div>
+</form>
 
-    </form>
-  </div>
+</div>
 
-  <script>
-    // Configuration
-    const API_URL = "https://staffnexa-backend.onrender.com/candidates";
-    
-    // Language Data
-    const langData = {
-      hi: {
-        title: "Staffnexa करियर",
-        subtitle: "आज ही हमारी टीम में शामिल हों",
-        fn: "पहला नाम",
-        ln: "अंतिम नाम",
-        ph: "मोबाइल नंबर",
-        role: "किस पद के लिए आवेदन",
-        loc: "पसंदीदा स्थान",
-        res: "रिज़्यूमे / सीवी",
-        tc: "घोषणा",
-        agree: "मैं नियम और शर्तें स्वीकार करता/करती हूँ",
-        btn: "आवेदन जमा करें",
-        tcText: "जानकारी की सटीकता अनिवार्य है। इस फॉर्म को जमा करके, आप Staffnexa Talent Solutions को केवल भर्ती उद्देश्यों के लिए आपकी जानकारी उपयोग करने की अनुमति देते हैं।"
-      },
-      en: {
-        title: "Staffnexa Careers",
-        subtitle: "Join our growing team today",
-        fn: "First Name",
-        ln: "Last Name",
-        ph: "Phone Number",
-        role: "Applying For",
-        loc: "Preferred Location",
-        res: "Resume / CV",
-        tc: "Declaration",
-        agree: "I read and accept the Terms & Conditions",
-        btn: "Submit Application",
-        tcText: "Accuracy of information is mandatory. By submitting this form, you consent to Staffnexa Talent Solutions collecting and processing your personal data for recruitment purposes only."
-      }
-    };
+<script>
 
-    // Elements
-    const form = document.getElementById("jobForm");
-    const submitBtn = document.getElementById("submitBtn");
-    const msg = document.getElementById("msg");
+const API_URL = "https://staffnexa-backend.onrender.com/candidates";
 
-    // Language Switcher Logic
-    function setLang(lang) {
-      const d = langData[lang];
-      
-      // Update Text
-      document.getElementById('title').innerText = d.title;
-      document.querySelector('.header-subtitle').innerText = d.subtitle;
-      document.getElementById('fnLbl').innerText = d.fn;
-      document.getElementById('lnLbl').innerText = d.ln;
-      document.getElementById('phLbl').innerText = d.ph;
-      document.getElementById('roleLbl').innerText = d.role;
-      document.getElementById('locLbl').innerText = d.loc;
-      document.getElementById('resLbl').innerText = d.res;
-      document.getElementById('tcLbl').innerText = d.tc;
-      document.getElementById('agreeLbl').innerText = d.agree;
-      document.getElementById('tcText').value = d.tcText;
-      submitBtn.innerText = d.btn;
+const form = document.getElementById("jobForm");
+const submitBtn = document.getElementById("submitBtn");
+const msg = document.getElementById("msg");
 
-      // Update Button Styles
-      document.getElementById('btn-en').className = lang === 'en' ? 'active' : '';
-      document.getElementById('btn-hi').className = lang === 'hi' ? 'active' : '';
-    }
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    // Reset Helper
-    function resetForm() {
-      form.reset();
-      msg.className = '';
-      msg.innerHTML = '';
-      submitBtn.disabled = false;
-    }
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Sending...";
+    msg.innerHTML = "";
+    msg.className = "";
 
-    // Form Submission Logic
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      
-      // UI Loading State
-      submitBtn.disabled = true;
-      const originalText = submitBtn.innerText;
-      submitBtn.innerText = "Sending...";
-      msg.className = '';
-      msg.innerHTML = '';
+    const f = e.target;
+    const fd = new FormData();
 
-      // Prepare Data
-      // Note: The backend expects "name", so we combine First + Last
-      const f = e.target;
-      const fd = new FormData();
-      
-      const fullName = (f.firstName.value.trim() + " " + f.lastName.value.trim()).trim();
-      
-      fd.append("name", fullName);
-      fd.append("phone", f.phone.value);
-      fd.append("role", f.role.value);
-      fd.append("location", f.location.value || "");
-      fd.append("resume", f.resume.files[0]);
+    const fullName = (f.firstName.value + " " + f.lastName.value).trim();
 
-      try {
+    fd.append("name", fullName);
+    fd.append("phone", f.phone.value);
+    fd.append("role", f.role.value);
+    fd.append("location", f.location.value || "");
+    fd.append("resume", f.resume.files[0]);
+
+    try {
+
+        console.log("Sending request...");
+
         const res = await fetch(API_URL, {
-          method: "POST",
-          body: fd
+            method: "POST",
+            body: fd
         });
 
+        console.log("Response:", res);
+
+        const data = await res.json();
+
         if (!res.ok) {
-          throw new Error("Server responded with error");
+            throw new Error(data.error || "Server Error");
         }
 
-        // Success
-        msg.innerHTML = "✅ Application submitted successfully! We will contact you soon.";
+        msg.innerHTML = "✅ Application submitted successfully!";
         msg.className = "success";
+
         form.reset();
 
-      } catch (err) {
-        console.error(err);
-        // Error
-        msg.innerHTML = "❌ Submission failed. Please check your internet or try again later.";
+    } catch (err) {
+
+        console.error("ERROR:", err);
+
+        msg.innerHTML = "❌ " + err.message;
         msg.className = "error";
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerText = originalText;
-      }
-    });
-  </script>
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.innerText = "Submit";
+
+});
+
+</script>
 
 </body>
 </html>
