@@ -1,258 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Staffnexa – Job Application</title>
 
-<style>
-body{
-  font-family:Arial, sans-serif;
-  background:#f4f6f8;
-  margin:0;
-  padding:20px;
-}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 
-.container{
-  max-width:900px;
-  margin:auto;
-  background:#fff;
-  padding:30px;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,.1);
+<script>
+tailwind.config = {
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+                brand: {
+                    500: '#3b82f6',
+                    600: '#2563eb',
+                    700: '#1d4ed8',
+                    900: '#1e3a8a',
+                }
+            }
+        }
+    }
 }
+</script>
 
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:25px;
-}
-
-.header h2{margin:0}
-
-.lang-toggle button{
-  margin-left:8px;
-  padding:6px 12px;
-  border-radius:6px;
-  border:1px solid #ccc;
-  background:#fff;
-  cursor:pointer;
-}
-
-.row{
-  display:flex;
-  gap:20px;
-  margin-bottom:15px;
-  flex-wrap:wrap;
-}
-
-.field{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-}
-
-label{
-  font-size:14px;
-  margin-bottom:6px;
-}
-
-input, select, textarea{
-  padding:10px;
-  border-radius:6px;
-  border:1px solid #ccc;
-  font-size:14px;
-}
-
-textarea{
-  resize:none;
-  height:90px;
-}
-
-.note{
-  font-size:12px;
-  color:#666;
-  margin-top:4px;
-}
-
-.checkbox-row{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin:15px 0;
-}
-
-.checkbox-row input{
-  transform:scale(1);
-}
-
-.buttons{
-  display:flex;
-  gap:15px;
-  margin-top:20px;
-}
-
-button.submit{
-  background:#5b6cff;
-  color:#fff;
-  border:none;
-  padding:10px 28px;
-  border-radius:24px;
-  cursor:pointer;
-}
-
-button.reset{
-  background:#e0e0e0;
-  border:none;
-  padding:10px 28px;
-  border-radius:24px;
-  cursor:pointer;
-}
-
-@media(max-width:700px){
-  .row{flex-direction:column}
-}
-</style>
 </head>
 
-<body>
+<body class="bg-gradient-to-br from-brand-900 via-brand-700 to-blue-500 min-h-screen flex items-center justify-center p-4 text-slate-800">
 
-<div class="container">
-  <div class="header">
-    <h2 id="title">Staffnexa – Job Application</h2>
-    <div class="lang-toggle">
-      <button onclick="setLang('en')">English</button>
-      <button onclick="setLang('hi')">हिंदी</button>
-    </div>
-  </div>
+<div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl p-6">
 
-  <form id="jobForm">
+<h2 class="text-xl font-bold mb-6 text-center">Staffnexa Job Application</h2>
 
-    <div class="row">
-      <div class="field">
-        <label id="fnLbl">First Name *</label>
-        <input name="firstName" required />
-      </div>
-      <div class="field">
-        <label id="lnLbl">Last Name *</label>
-        <input name="lastName" required />
-      </div>
-    </div>
+<form id="applicationForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <div class="row">
-      <div class="field">
-        <label id="phLbl">Phone *</label>
-        <input name="phone" required pattern="[0-9]{10}" />
-      </div>
-      <div class="field">
-        <label id="roleLbl">Applying For *</label>
-        <input name="role" required />
-      </div>
-    </div>
+<input type="text" name="name" placeholder="Full Name" required class="border p-2 rounded">
+<input type="text" name="phone" placeholder="Phone" required class="border p-2 rounded">
+<input type="text" name="role" placeholder="Applying For" required class="border p-2 rounded">
+<input type="text" name="location" placeholder="Location" class="border p-2 rounded">
 
-    <div class="row">
-      <div class="field">
-        <label id="locLbl">Location</label>
-        <input name="location" />
-      </div>
-      <div class="field">
-        <label id="resLbl">Upload Resume *</label>
-        <input type="file" name="resume" required />
-        <span class="note">PDF / DOC / JPG</span>
-      </div>
-    </div>
+<div class="md:col-span-2">
+<input type="file" name="resume" required class="border p-2 w-full rounded">
+</div>
 
-    <div class="field">
-      <label id="tcLbl">Terms & Conditions *</label>
-      <textarea readonly id="tcText">
-Accuracy of information is mandatory. By submitting this form, you consent to Staffnexa Talent Solutions collecting and processing your personal data for recruitment purposes only.
-      </textarea>
-    </div>
+<div class="md:col-span-2 flex items-center gap-2">
+<input type="checkbox" required>
+<span>I accept terms</span>
+</div>
 
-    <div class="checkbox-row">
-      <input type="checkbox" required />
-      <label id="agreeLbl">I accept the Terms & Conditions</label>
-    </div>
+<div class="md:col-span-2 flex gap-4">
+<button id="submitBtn" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
+Submit
+</button>
 
-    <div class="buttons">
-      <button type="submit" class="submit" id="submitBtn">Submit</button>
-      <button type="reset" class="reset">Reset</button>
-    </div>
+<button type="button" onclick="resetForm()" class="border px-4 py-2 rounded">
+Reset
+</button>
+</div>
 
-  </form>
+</form>
+
+</div>
+
+<!-- SUCCESS MODAL -->
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+
+<div class="bg-white p-6 rounded shadow text-center">
+<h3 class="text-lg font-bold mb-3">Application Submitted</h3>
+<button onclick="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
+Close
+</button>
+</div>
+
 </div>
 
 <script>
-const API="https://staffnexa-backend.onrender.com/candidates";
 
-const langData={
-  hi:{
-    title:"Staffnexa – नौकरी आवेदन",
-    fn:"पहला नाम *",
-    ln:"अंतिम नाम *",
-    ph:"मोबाइल नंबर *",
-    role:"पद *",
-    loc:"स्थान",
-    res:"रिज़्यूमे अपलोड करें *",
-    tc:"नियम और शर्तें *",
-    agree:"मैं नियम और शर्तें स्वीकार करता/करती हूँ",
-    tcText:"जानकारी की सटीकता अनिवार्य है। इस फॉर्म को जमा करके, आप Staffnexa Talent Solutions को केवल भर्ती उद्देश्यों के लिए आपकी जानकारी उपयोग करने की अनुमति देते हैं।"
-  },
-  en:{
-    title:"Staffnexa – Job Application",
-    fn:"First Name *",
-    ln:"Last Name *",
-    ph:"Phone *",
-    role:"Applying For *",
-    loc:"Location",
-    res:"Upload Resume *",
-    tc:"Terms & Conditions *",
-    agree:"I accept the Terms & Conditions",
-    tcText:"Accuracy of information is mandatory. By submitting this form, you consent to Staffnexa Talent Solutions collecting and processing your personal data for recruitment purposes only."
-  }
-};
+const API = "https://staffnexa-backend.onrender.com/candidates";
 
-function setLang(l){
-  const d=langData[l];
-  title.innerText=d.title;
-  fnLbl.innerText=d.fn;
-  lnLbl.innerText=d.ln;
-  phLbl.innerText=d.ph;
-  roleLbl.innerText=d.role;
-  locLbl.innerText=d.loc;
-  resLbl.innerText=d.res;
-  tcLbl.innerText=d.tc;
-  agreeLbl.innerText=d.agree;
-  tcText.value=d.tcText;
+// SUBMIT FORM
+document.getElementById("applicationForm").addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const form = e.target;
+    const btn = document.getElementById("submitBtn");
+
+    const formData = new FormData(form);
+
+    btn.innerText = "Submitting...";
+    btn.disabled = true;
+
+    try {
+
+        const res = await fetch(API, {
+            method: "POST",
+            body: formData
+        });
+
+        if (!res.ok) throw new Error("Failed");
+
+        const data = await res.json();
+
+        console.log("Saved:", data);
+
+        document.getElementById("successModal").classList.remove("hidden");
+
+        form.reset();
+
+    } catch (err) {
+        console.log(err);
+        alert("Error submitting form");
+    }
+
+    btn.innerText = "Submit";
+    btn.disabled = false;
+});
+
+// RESET
+function resetForm() {
+    document.getElementById("applicationForm").reset();
 }
 
-document.getElementById("jobForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  submitBtn.disabled=true;
-  submitBtn.innerText="Submitting...";
+// CLOSE MODAL
+function closeModal() {
+    document.getElementById("successModal").classList.add("hidden");
+}
 
-  const f=e.target;
-  const fd=new FormData();
-
-  fd.append("name",f.firstName.value.trim()+" "+f.lastName.value.trim());
-  fd.append("phone",f.phone.value);
-  fd.append("role",f.role.value);
-  fd.append("location",f.location.value||"");
-  fd.append("resume",f.resume.files[0]);
-
-  try{
-    const r=await fetch(API,{method:"POST",body:fd});
-    if(!r.ok)throw 0;
-    alert("Application submitted successfully!");
-    f.reset();
-  }catch{
-    alert("Submission failed. Please try again.");
-  }finally{
-    submitBtn.disabled=false;
-    submitBtn.innerText="Submit";
-  }
-});
 </script>
 
 </body>
