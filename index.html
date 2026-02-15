@@ -5,18 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Staffnexa – Job Application</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script>
 tailwind.config = {
     theme: {
         extend: {
-            fontFamily: {
-                sans: ['Inter', 'sans-serif'],
-            },
+            fontFamily: { sans: ['Inter', 'sans-serif'] },
             colors: {
                 brand: {
+                    50: '#eff6ff',
+                    100: '#dbeafe',
                     500: '#3b82f6',
                     600: '#2563eb',
                     700: '#1d4ed8',
@@ -28,30 +30,47 @@ tailwind.config = {
 }
 </script>
 
+<style>
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+.fade-in { animation: fadeIn 0.3s ease-in-out; }
+@keyframes fadeIn { from {opacity:0} to {opacity:1} }
+</style>
+
 </head>
 
-<body class="bg-gradient-to-br from-brand-900 via-brand-700 to-blue-500 min-h-screen flex items-center justify-center p-4 text-slate-800">
+<body class="bg-gradient-to-br from-brand-900 via-brand-700 to-blue-500 min-h-screen flex items-center justify-center p-4">
 
-<div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl p-6">
+<div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden fade-in">
 
-<h2 class="text-xl font-bold mb-6 text-center">Staffnexa Job Application</h2>
-
-<form id="applicationForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-<input type="text" name="name" placeholder="Full Name" required class="border p-2 rounded">
-<input type="text" name="phone" placeholder="Phone" required class="border p-2 rounded">
-<input type="text" name="role" placeholder="Applying For" required class="border p-2 rounded">
-<input type="text" name="location" placeholder="Location" class="border p-2 rounded">
-
-<div class="md:col-span-2">
-<input type="file" name="resume" required class="border p-2 w-full rounded">
+<!-- HEADER -->
+<div class="border-b p-6 flex justify-between items-center">
+<h1 class="text-xl font-bold">Staffnexa – Job Application</h1>
 </div>
 
-<div class="md:col-span-2 flex items-center gap-2">
+<!-- FORM -->
+<form id="applicationForm" class="p-6 grid md:grid-cols-2 gap-4">
+
+<input name="name" required placeholder="First Name" class="border p-2 rounded">
+<input name="lastname" required placeholder="Last Name" class="border p-2 rounded">
+
+<input name="phone" required placeholder="Phone" class="border p-2 rounded">
+<input name="role" required placeholder="Applying For" class="border p-2 rounded">
+
+<input name="location" placeholder="Location" class="border p-2 rounded">
+
+<!-- FILE -->
+<div class="md:col-span-2">
+<input type="file" name="resume" id="resume" required class="border p-2 w-full rounded">
+</div>
+
+<!-- TERMS -->
+<div class="md:col-span-2 flex gap-2 items-center">
 <input type="checkbox" required>
 <span>I accept terms</span>
 </div>
 
+<!-- BUTTONS -->
 <div class="md:col-span-2 flex gap-4">
 <button id="submitBtn" type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
 Submit
@@ -68,21 +87,17 @@ Reset
 
 <!-- SUCCESS MODAL -->
 <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-
-<div class="bg-white p-6 rounded shadow text-center">
+<div class="bg-white p-6 rounded text-center">
 <h3 class="text-lg font-bold mb-3">Application Submitted</h3>
-<button onclick="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
-Close
-</button>
+<button onclick="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded">Close</button>
 </div>
-
 </div>
 
 <script>
 
 const API = "https://staffnexa-backend.onrender.com/candidates";
 
-// SUBMIT FORM
+// 🔥 SUBMIT (FIXED)
 document.getElementById("applicationForm").addEventListener("submit", async function(e) {
 
     e.preventDefault();
@@ -90,6 +105,7 @@ document.getElementById("applicationForm").addEventListener("submit", async func
     const form = e.target;
     const btn = document.getElementById("submitBtn");
 
+    // 🔥 USE FORMDATA (IMPORTANT)
     const formData = new FormData(form);
 
     btn.innerText = "Submitting...";
@@ -102,18 +118,19 @@ document.getElementById("applicationForm").addEventListener("submit", async func
             body: formData
         });
 
-        if (!res.ok) throw new Error("Failed");
+        if (!res.ok) throw new Error("Upload failed");
 
         const data = await res.json();
 
         console.log("Saved:", data);
 
+        // SUCCESS
         document.getElementById("successModal").classList.remove("hidden");
 
         form.reset();
 
     } catch (err) {
-        console.log(err);
+        console.error(err);
         alert("Error submitting form");
     }
 
